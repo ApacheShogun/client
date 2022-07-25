@@ -31,7 +31,7 @@ const Home = () => {
         </h1>
       </div>
       <div className="content-container">
-        {/* in mobile screens content popup on which tab is clicked */}
+        {/* in mobile screens content popup on which tab is clicked */ }
         <div className={toggleTabs === 1 ? "post-container active-container" : 'post-container'}>
           {posts.map((post) => {
             return <Card key={post.id} post={post} />;
