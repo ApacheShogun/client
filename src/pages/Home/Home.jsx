@@ -16,7 +16,7 @@ const Home = () => {
     return () => {
       window.removeEventListener("scroll", showTheMobileTabs);
     };
-  }, [window.scrollY]);
+  }, []);
 
   const showTheMobileTabs = () => {
     window.scrollY >= 105 ? setShowTabs(true) : setShowTabs(false);
