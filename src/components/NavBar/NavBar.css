@@ -1,0 +1,70 @@
+.navbar{
+    background-color: #030204;
+    color: white;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center ;
+    padding: 1.375em 1.875em;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.logo{
+    font-weight: 400;
+}
+
+.GiHamburgerMenu{
+    cursor: pointer;
+}
+
+.nav-links{
+    display: none;
+}
+
+.sidebar{
+    position: fixed;
+    top: 0;
+    background: rgba(0, 0, 0, 0.9);
+    right: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    transform: translateX(100%);
+    transition: all 0.4s;
+    z-index: 999;
+}
+
+.sidebar li{
+    list-style: none;
+    padding: 1em 1.8em;
+}
+
+.openSidebar{
+    transform: translateX(0%);
+}
+
+.closeSidebar{
+    align-self: flex-end;
+    margin-top: 1.1em;
+    margin-right: 1.8em;
+    cursor: pointer;
+}
+
+.backdrop{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 0.5;
+    background: black;
+    display: none;
+}
+
+.showBackdrop{
+    display: block;
+}
