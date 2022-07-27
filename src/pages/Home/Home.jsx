@@ -25,10 +25,13 @@ const Home = () => {
   return (
     <div className="home-page">
       <div className="banner-container">
-        <h1 className="banner-text">
-          Got ideas on your luner surface? Post them to the many astronauts to
-          view!
-        </h1>
+        <div className="banner-content">
+          <h1 className="banner-text">
+            Got ideas on your luner surface? Post them to the many astronauts to
+            view!
+          </h1>
+
+        </div>
       </div>
       <div className="content-container">
         {/* in mobile screens content popup on which tab is clicked */ }

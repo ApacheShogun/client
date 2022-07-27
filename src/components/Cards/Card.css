@@ -6,6 +6,12 @@
   padding: 1.375em 1.875em;
 }
 
+@media (min-width: 576px) {
+  .card-post {
+    padding: 1.8em 3em;
+  }
+}
+
 .card-likes,
 .card-comments,
 .card-user-info {

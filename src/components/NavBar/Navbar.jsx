@@ -11,6 +11,8 @@ const Navbar = () => {
   };
 
   return (
+    <div className="nav-container">
+
     <nav className="navbar">
       <h1 className="logo">Nebula Poster</h1>
       <GiHamburgerMenu
@@ -29,6 +31,7 @@ const Navbar = () => {
         <li>Sign Up</li>
       </ul>
     </nav>
+    </div>
   );
 };
 
