@@ -80,3 +80,18 @@
 .showBackdrop {
   display: block;
 }
+
+@media (min-width : 992px) {
+  .GiHamburgerMenu{
+    display: none;
+  }
+
+  .nav-links{
+    display: flex;
+  }
+
+  .nav-links li {
+    list-style: none;
+    margin-left: 1em;
+  }
+}

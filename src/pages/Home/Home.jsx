@@ -10,8 +10,11 @@ const Home = () => {
   const [showTabs, setShowTabs] = useState(false);
   const [toggleTabs, setToggleTabs] = useState(1);
 
+
+
   useEffect(() => {
     window.addEventListener("scroll", showTheMobileTabs);
+
 
     return () => {
       window.removeEventListener("scroll", showTheMobileTabs);
@@ -21,6 +24,8 @@ const Home = () => {
   const showTheMobileTabs = () => {
     window.scrollY >= 105 ? setShowTabs(true) : setShowTabs(false);
   };
+
+
 
   return (
     <div className="home-page">
@@ -33,16 +38,19 @@ const Home = () => {
 
         </div>
       </div>
+      <div className="content-flex">
+
       <div className="content-container">
-        {/* in mobile screens content popup on which tab is clicked */ }
+        {/* on small screens the content switches on the clicked tab */ }
         <div className={toggleTabs === 1 ? "post-container active-container" : 'post-container'}>
           {posts.map((post) => {
             return <Card key={post.id} post={post} />;
           })}
         </div>
         <div className={toggleTabs === 2 ? "news-container active-container" : 'news-container'}>
-          <h1>news</h1>
+          <h1 className="test">test</h1>
         </div>
+      </div>
       </div>
 
       {/* show tabs on small screens */}
