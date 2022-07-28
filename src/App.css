@@ -4,3 +4,25 @@
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #cbc7cc #e9e2e2;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: none
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #cbc7cc;
+    border-radius: 19px;
+    border: 0px solid #ffffff;
+  }

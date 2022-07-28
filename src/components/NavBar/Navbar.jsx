@@ -25,6 +25,7 @@ const Navbar = () => {
         className={sideBar ? "backdrop showBackdrop" : "backdrop"}
         onClick={toggleSideBar}
       ></div>
+      
       <ul className="nav-links">
         <li>About</li>
         <li>Login</li>

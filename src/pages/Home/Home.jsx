@@ -1,20 +1,19 @@
 import Card from "../../components/Cards/Card";
 import "./Home.css";
 import { posts } from "../../assets/dummydata";
+import { news } from "../../assets/apiNews";
 import { useEffect, useState } from "react";
 import { AiOutlineRocket } from "react-icons/ai";
 import { BsNewspaper } from "react-icons/bs";
+import {formatDistanceStrict} from 'date-fns'
 
 const Home = () => {
   const [allposts, setAllPost] = useState([]);
   const [showTabs, setShowTabs] = useState(false);
   const [toggleTabs, setToggleTabs] = useState(1);
 
-
-
   useEffect(() => {
     window.addEventListener("scroll", showTheMobileTabs);
-
 
     return () => {
       window.removeEventListener("scroll", showTheMobileTabs);
@@ -48,7 +47,26 @@ const Home = () => {
           })}
         </div>
         <div className={toggleTabs === 2 ? "news-container active-container" : 'news-container'}>
-          <h1 className="test">test</h1>
+        <h1>News In Orbit</h1>
+          <div className="news-wrapper">
+            
+            {
+                news.map(article => (
+                  
+            <div className="news-article" key={article.id}>
+              <div className="news-content">
+                <span className="news-time">{formatDistanceStrict(new Date(article.publishedAt), new Date(), { addSuffix: true })}</span>
+                <h3 className="news-title">{article.title}</h3>
+                <p className="news-summary">{article.summary}</p>
+                <a href={article.url} target="_blank" rel="noopener noreferrer" className="news-website">visit artice website</a>
+              </div>
+              <div className="news-img">
+                <img src={article.imageUrl} alt="article" />
+              </div>
+            </div>
+                ))
+              }
+          </div>
         </div>
       </div>
       </div>
