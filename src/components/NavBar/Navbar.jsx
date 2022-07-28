@@ -2,6 +2,7 @@ import "./NavBar.css";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [sideBar, setSideBar] = useState(false);
@@ -14,7 +15,7 @@ const Navbar = () => {
     <div className="nav-container">
 
     <nav className="navbar">
-      <h1 className="logo">Nebula Poster</h1>
+      <h1 className="logo"> <Link to='/'>Nebula Poster</Link> </h1>
       <GiHamburgerMenu
         size="2em"
         onClick={toggleSideBar}

@@ -199,6 +199,10 @@ height: 125px;
   padding-right: 1em;
 }
 
+.news-summary{
+  font-size: .75em;
+}
+
 .content-flex{
   width: 100%;
   background-color: #d9d9d9;

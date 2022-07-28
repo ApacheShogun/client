@@ -4,6 +4,7 @@
   flex-direction: column;
   margin-top: 1.5em;
   padding: 1.375em 1.875em;
+  cursor: pointer;
 }
 
 @media (min-width: 576px) {
@@ -28,6 +29,7 @@
 
 .card-username {
   font-size: 0.875rem;
+  font-weight: 700;
 }
 
 .card-posted-date {

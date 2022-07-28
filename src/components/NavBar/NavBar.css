@@ -26,6 +26,11 @@
 
 .logo {
   font-weight: 400;
+  cursor: pointer;
+}
+
+.logo a {
+  color: white;
 }
 
 .GiHamburgerMenu {

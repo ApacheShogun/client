@@ -1,10 +1,13 @@
 import { AiOutlineLike } from "react-icons/ai";
 import { BiComment } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import "./Card.css";
 
 const Card = ({ post }) => {
+  const navigate = useNavigate()
+
   return (
-    <div className="card-post">
+    <div className="card-post" onClick={() => navigate(`/post/${post.id}`)}>
       <div className="card-user-info">
         <p className="card-username">@{post.username}</p>
         <p className="card-posted-date">posted 1d ago</p>
