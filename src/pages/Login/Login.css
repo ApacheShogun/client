@@ -1,0 +1,39 @@
+.login-page{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    background: url('../../assets/astronaut-in-orbit.jpg');
+    background-position: center;
+    background-size: cover;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-title {
+    font-size: 1rem;
+    padding: 1em;
+  }
+  
+  @media (min-width: 576px){
+      .login-title{
+          font-size: 1.25rem;
+      }
+  }
+
+.loginBtn {
+    width: 100%;
+    padding: 0.9em;
+    background-color: #b57eeb;
+    border-radius: 0.5em;
+    border: none;
+    margin: 1.25em 0;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all .2s;
+  }
+  
+  .loginBtn:hover{
+      color: #b57eeb;
+      background: rgba(217, 217, 217, 0.8);
+  }
+  

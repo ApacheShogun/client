@@ -29,7 +29,9 @@
   cursor: pointer;
 }
 
-.logo a {
+.logo a,
+.nav-links a,
+.sidebar li a{
   color: white;
 }
 
@@ -40,6 +42,8 @@
 .nav-links {
   display: none;
 }
+
+
 
 .sidebar {
   position: fixed;

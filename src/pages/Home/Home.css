@@ -185,7 +185,7 @@ height: 125px;
   position: sticky;
   top: 100px;
   margin-top: 1.5em;
-  width: 50%;
+  width: 55%;
   height: 80vh;
   flex-direction: column;
   align-items: center;
@@ -200,7 +200,7 @@ height: 125px;
 }
 
 .news-summary{
-  font-size: .75em;
+  font-size: .75rem;
 }
 
 .content-flex{
@@ -213,4 +213,10 @@ height: 125px;
   width: 80%;
   margin: 0 auto;
 }
+}
+
+@media (min-width: 1200px) {
+  .news-summary{
+    font-size: .93rem;
+  }
 }
