@@ -1,0 +1,35 @@
+.create-post-container {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.5em;
+  padding: 1.375em 1.875em;
+  cursor: pointer;
+}
+
+.createform{
+    display: flex;
+    flex-direction: column;
+}
+
+#createpost{
+    padding: .68em;
+    border: none;
+    margin: .7em 0;
+    width: 100%;
+    height: auto;
+}
+
+.createformBtn{
+    padding: .68em;
+    border: none;
+    border-radius: .75em;
+    margin-top: 1.6em;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.createformBtn:hover{
+    background-color: #00ffff;
+    transform: scale(1.05);
+}

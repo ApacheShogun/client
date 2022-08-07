@@ -24,6 +24,7 @@ const Login = () => {
          dispatch({type: 'LOGIN', payload: res.data})
          navigate('/')
          console.log(res.data);
+         
 
     }).catch(error => {
       if(error.response){

@@ -1,22 +1,28 @@
 import { AiOutlineLike } from "react-icons/ai";
 import { BiComment } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { Image } from "cloudinary-react";
+import { formatDistanceStrict } from "date-fns";
 import "./Card.css";
 
 const Card = ({ post }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="card-post" onClick={() => navigate(`/post/${post.id}`)}>
       <div className="card-user-info">
         <p className="card-username">@{post.username}</p>
-        <p className="card-posted-date">posted 1d ago</p>
+        <p className="card-posted-date">
+          posted {formatDistanceStrict(new Date(post.updatedAt), new Date(), {
+            addSuffix: true,
+          })}
+        </p>
       </div>
-      <p className="card-comment-text">{post.text}</p>
+      <p className="card-comment-text">{post.postText}</p>
 
-      {post.img && (
+      {post.postImg && (
         <div className="card-img-container">
-          <img src={require(`../../assets/${post.img}`)} alt="picure" />
+          <Image cloudName="dwfb3adcj" publicId={post.postImg} loading="lazy" />
         </div>
       )}
 

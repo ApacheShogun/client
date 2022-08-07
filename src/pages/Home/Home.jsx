@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { AiOutlineRocket } from "react-icons/ai";
 import { BsNewspaper } from "react-icons/bs";
 import { formatDistanceStrict } from "date-fns";
+import CreatePostForm from "../../components/CreatePost/CreatePost";
 
-const Home = ({ allposts }) => {
+const Home = ({ allposts, setAllPost, isLoading, setIsLoading }) => {
   const [showTabs, setShowTabs] = useState(false);
   const [toggleTabs, setToggleTabs] = useState(1);
 
@@ -32,7 +33,7 @@ const Home = ({ allposts }) => {
           </h1>
         </div>
       </div>
-      
+
       <div className="content-flex">
         <div className="content-container">
           {/* on small screens the content switches on the clicked tab */}
@@ -43,9 +44,18 @@ const Home = ({ allposts }) => {
                 : "post-container"
             }
           >
-            {allposts.map((post) => {
-              return <Card key={post.id} post={post} />;
-            })}
+            {/* create a post form component */}
+            <CreatePostForm
+              setAllPost={setAllPost}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+
+            <div className="post-wrapper">
+              {allposts.map((post) => {
+                return <Card key={post.id} post={post} />;
+              })}
+            </div>
           </div>
           <div
             className={

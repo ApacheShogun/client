@@ -4,27 +4,49 @@
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
-a{
+a {
   text-decoration: none;
 }
 /* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #cbc7cc #e9e2e2;
-  }
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbc7cc #e9e2e2;
+}
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 5px;
-  }
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+}
 
-  *::-webkit-scrollbar-track {
-    background: none
-  }
+*::-webkit-scrollbar-track {
+  background: none;
+}
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #cbc7cc;
-    border-radius: 19px;
-    border: 0px solid #ffffff;
-  }
+*::-webkit-scrollbar-thumb {
+  background-color: #cbc7cc;
+  border-radius: 19px;
+  border: 0px solid #ffffff;
+}
+
+.isloadingIcon {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #02b9f2;
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: isloadingIcon 1s ease-in-out infinite;
+  -webkit-animation: isloadingIcon 1s ease-in-out infinite;
+}
+
+@keyframes isloadingIcon {
+        to {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+      @-webkit-keyframes isloadingIcon {
+        to {
+          -webkit-transform: rotate(360deg);
+        }
+      }

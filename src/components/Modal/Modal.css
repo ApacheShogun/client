@@ -1,0 +1,45 @@
+.modal-container{
+    background: white;
+    width: 100%;
+    margin: 0 1.8em;
+    padding: 1.5em;
+    z-index: 1;
+    border-radius: .75em;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-btn-container,
+.modal-delete-options{
+    text-align: right;
+}
+
+.modal-delete-options{
+    margin-top: 1em;
+}
+.modal-close-btn{
+    cursor: pointer;
+    margin-bottom: 1em;
+}
+
+.delete-prompt{
+    font-size: 1.5rem;
+}
+
+.edit-post-container{
+    align-self: flex-end;
+    margin-top: 1em;
+    position: relative;
+}
+
+.postloading{
+    align-self: center;
+    margin-top: 1em;
+}
+
+@media (min-width: 576px) {
+    .modal-container{
+        width: 80%;
+        max-width: 576px;
+    }
+  }
