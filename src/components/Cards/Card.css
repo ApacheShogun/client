@@ -4,6 +4,11 @@
   flex-direction: column;
   margin-top: 1.5em;
   padding: 1.375em 1.875em;
+
+}
+
+.card-content,
+.like-icon{
   cursor: pointer;
 }
 

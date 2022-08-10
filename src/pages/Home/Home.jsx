@@ -7,7 +7,15 @@ import { BsNewspaper } from "react-icons/bs";
 import { formatDistanceStrict } from "date-fns";
 import CreatePostForm from "../../components/CreatePost/CreatePost";
 
-const Home = ({ allposts, setAllPost, isLoading, setIsLoading }) => {
+const Home = ({
+  allposts,
+  setAllPosts,
+  isLoading,
+  setIsLoading,
+  allLikes,
+  setAllLikes,
+}) => {
+  // console.log(allposts);
   const [showTabs, setShowTabs] = useState(false);
   const [toggleTabs, setToggleTabs] = useState(1);
 
@@ -46,14 +54,22 @@ const Home = ({ allposts, setAllPost, isLoading, setIsLoading }) => {
           >
             {/* create a post form component */}
             <CreatePostForm
-              setAllPost={setAllPost}
+              setAllPosts={setAllPosts}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
             />
 
             <div className="post-wrapper">
               {allposts.map((post) => {
-                return <Card key={post.id} post={post} />;
+                return (
+                  <Card
+                    key={post.id}
+                    post={post}
+                    allLikes={allLikes}
+                    setAllLikes={setAllLikes}
+                    setAllPosts={setAllPosts}
+                  />
+                );
               })}
             </div>
           </div>

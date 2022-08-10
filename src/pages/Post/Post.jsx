@@ -2,13 +2,13 @@ import { useParams } from "react-router-dom";
 import "./Post.css";
 import { AiOutlineLike } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import { formatDistance } from "date-fns";
+import { formatDistanceStrict } from "date-fns";
 import { Image } from "cloudinary-react";
 import Modal from "../../components/Modal/Modal";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import axios from "axios";
 
-const Post = ({ setAllPost, isLoading, setIsLoading }) => {
+const Post = ({ setAllPosts, isLoading, setIsLoading }) => {
   const { id } = useParams();
   const [toggleModal, setToggleModal] = useState(false);
   const [toDelete, setToDelete] = useState(false);
@@ -16,8 +16,6 @@ const Post = ({ setAllPost, isLoading, setIsLoading }) => {
   const [singlePost, setSinglePost] = useState({});
 
   const { user } = useAuthContext();
-
-  console.log(singlePost);
 
   useEffect(() => {
     axios
@@ -43,7 +41,7 @@ const Post = ({ setAllPost, isLoading, setIsLoading }) => {
   // this function returns the date from the post after it the post data has been fetched.
  function date(){
    if(singlePost.updatedAt){
-    return formatDistance(new Date(singlePost.updatedAt), new Date(), {
+    return formatDistanceStrict(new Date(singlePost.updatedAt), new Date(), {
       addSuffix: true,
     })
    }
@@ -55,7 +53,7 @@ const Post = ({ setAllPost, isLoading, setIsLoading }) => {
         <div className="post-user-info">
           <p className="post-username">@{singlePost.username}</p>
           <p className="post-posted-date">
-            posted at {date()}
+            posted {date()}
           </p>
         </div>
         <p className="post-comment-text">{singlePost.postText}</p>
@@ -94,7 +92,7 @@ const Post = ({ setAllPost, isLoading, setIsLoading }) => {
               setToEdit={setToEdit}
               postId={singlePost.id}
               postText={singlePost.postText}
-              setAllPost={setAllPost}
+              setAllPosts={setAllPosts}
               isLoading={isLoading}
               setIsLoading={setIsLoading}
               setSinglePost={setSinglePost}

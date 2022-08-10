@@ -14,7 +14,7 @@ const Modal = ({
   toEdit,
   postId,
   postText,
-  setAllPost,
+  setAllPosts,
   isLoading,
   setIsLoading,
   setSinglePost
@@ -69,7 +69,7 @@ const Modal = ({
           setSinglePost( prev => ({...prev, postText: data.postText}))
           closeModal();
           // const newPost = res.data.post
-          // setAllPost(prev => [...prev, newPost])
+          // setAllPosts(prev => [...prev, newPost])
         })
         .catch((error) => {
           console.log(error.response.data.error);
@@ -122,7 +122,7 @@ const Modal = ({
       })
       .then((res) => {
         setIsLoading(false)
-        setAllPost((prev) => prev.filter((post) => post.id !== id));
+        setAllPosts((prev) => prev.filter((post) => post.id !== id));
         navigate("/");
       });
   };

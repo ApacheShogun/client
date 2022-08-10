@@ -8,22 +8,37 @@ import { useEffect, useState } from "react";
 import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import axios from "axios";
+import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
-  const [allposts, setAllPost] = useState([]);
+  const [allposts, setAllPosts] = useState([]);
+  const [allLikes, setAllLikes] = useState([])
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/post")
       .then((res) => {
-        setAllPost(res.data.listofposts);
+        setAllPosts(res.data.listofposts);
+        
       })
       .catch((error) => {
         console.log(error);
       });
-    // setAllPost(posts)
-  }, []);
+
+      // puts all the liked post in state if the user is logged in
+      if(user){
+        axios.get("http://localhost:4000/api/like", {
+          headers: { jwtToken: user.token }
+        }).then(res => {
+          console.log(res.data);
+          setAllLikes(res.data.likedPosts.map(like => like.PostId))
+        }).catch(error => {
+          console.log(error);
+        })
+      }
+  }, [user]);
 
   return (
     <BrowserRouter>
@@ -35,9 +50,11 @@ function App() {
             element={
               <Home
                 allposts={allposts}
-                setAllPost={setAllPost}
+                setAllPosts={setAllPosts}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                allLikes={allLikes}
+                setAllLikes={setAllLikes}
               />
             }
           />
@@ -48,7 +65,7 @@ function App() {
             path="/post/:id"
             element={
               <Post
-                setAllPost={setAllPost}
+                setAllPosts={setAllPosts}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
               />

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 // yup helps with the validation
 
-const CreatePostForm = ({ setAllPost, isLoading, setIsLoading }) => {
+const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
   const navigate = useNavigate();
 
   const { user } = useAuthContext();
@@ -39,10 +39,11 @@ const CreatePostForm = ({ setAllPost, isLoading, setIsLoading }) => {
           headers: { jwtToken: user.token },
         })
         .then((res) => {
-          console.log(res.data.post);
           
           const newPost = res.data.post;
-          setAllPost((prev) => [...prev, newPost]);
+          newPost.Likes = []
+          console.log(newPost);
+          setAllPosts((prev) => [...prev, newPost]);
           setIsLoading(false)
         })
         .catch((error) => {
@@ -74,9 +75,9 @@ const CreatePostForm = ({ setAllPost, isLoading, setIsLoading }) => {
               }
             )
             .then((res) => {
-              console.log(res.data.post);
               const newPost = res.data.post;
-              setAllPost((prev) => [...prev, newPost]);
+              newPost.Likes = []
+              setAllPosts((prev) => [...prev, newPost]);
               setIsLoading(false)
             });
         })
