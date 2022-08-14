@@ -43,6 +43,10 @@
   color: #9d9797;
 }
 
+.card-comments{
+  cursor: pointer;
+}
+
 .card-comment-text {
   padding: 1em 0;
 }

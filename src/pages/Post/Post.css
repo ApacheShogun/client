@@ -111,27 +111,6 @@
   color: black;
 }
 
-
-/* COMMENTS */
-
-.comment-container {
-  margin-left: 2em;
-  margin-bottom: 3em;
-}
-
-.comment {
-  border: none;
-  padding: 0.75em 1.875em;
-}
-
-.comment-body {
-  margin: 0.5em 0;
-}
-
-.comment-date {
-  color: #9d9797;
-}
-
 @media (min-width: 576px) {
   .single-post {
     padding: 1.8em 3em;
@@ -149,9 +128,5 @@
     width: 80%;
     max-width: 550px;
     margin: 1em 0;
-  }
-
-  .comment-container {
-    margin-left: 3em;
   }
 }

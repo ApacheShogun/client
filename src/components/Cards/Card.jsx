@@ -107,9 +107,9 @@ const Card = ({ post, allLikes, setAllLikes, setAllPosts }) => {
             { post.Likes.length} {post.Likes.length === 1 ? "like" : "likes"}
           </p>
         </div>
-        <div className="card-comments">
+        <div className="card-comments" onClick={() => navigate(`/post/${post.id}`)}>
           <BiComment size="1.5em" />
-          <p className="card-comment-amount">3 comments</p>
+          <p className="card-comment-amount">{post.Comments.length} comments</p>
         </div>
       </div>
     </div>

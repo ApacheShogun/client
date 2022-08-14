@@ -1,0 +1,57 @@
+
+.comment-container {
+    margin-left: 2em;
+  margin-bottom: 10em;
+  }
+
+  .createCommentform{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2em;
+  }
+  
+  .comment-flex{
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .single-comment {
+    border: none;
+    padding: 0.75em 1.875em;
+  }
+  
+  .comment-body {
+    margin: 0.5em 0;
+  }
+  
+  .comment-date {
+    color: #9d9797;
+  }
+
+  .createCommentBtn{
+    padding: .68em 2em;
+    border: none;
+    border-radius: .75em;
+    margin-top: 1.6em;
+    cursor: pointer;
+    transition: all .3s;
+  }
+
+  .createCommentBtn:hover{
+    background-color: #00ffff;
+    transform: scale(1.05);
+  }
+  
+  @media (min-width: 576px) {
+    .single-comment {
+      padding: 1.8em 3em;
+      margin-left: 1.5em;
+    }
+  }
+  
+  @media (min-width: 770px) {
+  
+    .comment-container {
+      margin-left: 3em;
+    }
+  }

@@ -1,19 +1,27 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./Post.css";
-import { AiOutlineLike } from "react-icons/ai";
+import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { formatDistanceStrict } from "date-fns";
 import { Image } from "cloudinary-react";
 import Modal from "../../components/Modal/Modal";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import axios from "axios";
+import Comments from "./CommentSection./Comments";
 
-const Post = ({ setAllPosts, isLoading, setIsLoading }) => {
+const Post = ({
+  setAllPosts,
+  isLoading,
+  setIsLoading,
+  allLikes,
+  setAllLikes,
+}) => {
   const { id } = useParams();
   const [toggleModal, setToggleModal] = useState(false);
   const [toDelete, setToDelete] = useState(false);
   const [toEdit, setToEdit] = useState(false);
   const [singlePost, setSinglePost] = useState({});
+  const navigate = useNavigate();
 
   const { user } = useAuthContext();
 
@@ -38,23 +46,89 @@ const Post = ({ setAllPosts, isLoading, setIsLoading }) => {
     setToEdit(true);
   };
 
+  // like a post
+  const handleLike = (id) => {
+    if (!user) {
+      console.log("log in");
+      return navigate("/login");
+    }
+
+    axios
+      .post(
+        "http://localhost:4000/api/like",
+        {
+          PostId: id,
+        },
+        {
+          headers: { jwtToken: user.token },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setSinglePost((prev) => {
+          if (prev.id === id) {
+            if (res.data.liked) {
+              return { ...prev, Likes: [...prev.Likes, 0] };
+            } else {
+              const likesArray = prev.Likes;
+              likesArray.pop();
+              return { ...prev, Likes: likesArray };
+            }
+          } else {
+            return prev;
+          }
+        });
+
+        setAllPosts((prev) => {
+          return prev.map((p) => {
+            if (p.id === id) {
+              if (res.data.liked) {
+                return { ...p, Likes: [...p.Likes, 0] };
+              } else {
+                const likesArray = p.Likes;
+                likesArray.pop();
+                return { ...p, Likes: likesArray };
+              }
+            } else {
+              return p;
+            }
+          });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // some jank way of toggling the liked icons based on the current login user
+    if (allLikes.includes(id)) {
+      setAllLikes((prev) => prev.filter((i) => i !== id));
+    } else {
+      setAllLikes((prev) => [...prev, id]);
+    }
+  };
+
   // this function returns the date from the post after it the post data has been fetched.
- function date(){
-   if(singlePost.updatedAt){
-    return formatDistanceStrict(new Date(singlePost.updatedAt), new Date(), {
-      addSuffix: true,
-    })
-   }
- }
+  function date() {
+    if (singlePost.updatedAt) {
+      return formatDistanceStrict(new Date(singlePost.updatedAt), new Date(), {
+        addSuffix: true,
+      });
+    }
+  }
+
+  // this function returns the like count from the post after it the post data has been fetched.
+  function likeCount() {
+    if (singlePost.Likes) {
+      return singlePost.Likes.length;
+    }
+  }
 
   return (
     <div className="single-post-container">
       <div className="single-post" key={singlePost.id}>
         <div className="post-user-info">
           <p className="post-username">@{singlePost.username}</p>
-          <p className="post-posted-date">
-            posted {date()}
-          </p>
+          <p className="post-posted-date">posted {date()}</p>
         </div>
         <p className="post-comment-text">{singlePost.postText}</p>
         {singlePost.postImg && (
@@ -64,8 +138,22 @@ const Post = ({ setAllPosts, isLoading, setIsLoading }) => {
         )}
         <div className="post-interactions">
           <div className="post-likes">
-            <AiOutlineLike size="1.5em" />
-            <p className="post-like-amount">4 likes</p>
+            {/* the button shows blue if user is logged in and liked the post */}
+            {user && allLikes.includes(singlePost.id) ? (
+              <AiFillLike
+                color="#02b9f2"
+                size="1.5em"
+                className="like-icon"
+                onClick={() => handleLike(singlePost.id)}
+              />
+            ) : (
+              <AiOutlineLike
+                size="1.5em"
+                className="like-icon"
+                onClick={() => handleLike(singlePost.id)}
+              />
+            )}
+            <p className="post-like-amount">{likeCount()} likes</p>
           </div>
 
           {/* if user is loggin and if their username is the same as the post username */}
@@ -100,59 +188,7 @@ const Post = ({ setAllPosts, isLoading, setIsLoading }) => {
           </div>
         )}
       </div>
-
-      <div className="comment-container">
-        <div className="comment">
-          <h3 className="comment-username">@comment person</h3>
-          <p className="comment-body">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Repellendus ducimus doloribus possimus similique tempora ex quas,
-            commodi sequi, dicta tenetur magni nisi porro tempore vero aliquid
-            in eligendi explicabo! Minima?
-          </p>
-          <span className="comment-date">replied 1d ago</span>
-        </div>
-        <div className="comment">
-          <h3 className="comment-username">@comment person</h3>
-          <p className="comment-body">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Repellendus ducimus doloribus .
-          </p>
-          <span className="comment-date">replied 1d ago</span>
-        </div>
-        <div className="comment">
-          <h3 className="comment-username">@comment person</h3>
-          <p className="comment-body">
-            {" "}
-            dicta tenetur magni nisi porro tempore vero aliquid in eligendi
-            explicabo! Minima?
-          </p>
-          <span className="comment-date">replied 1d ago</span>
-        </div>
-        <div className="comment">
-          <h3 className="comment-username">@comment person</h3>
-          <p className="comment-body">
-            {" "}
-            aliquid in eligendi explicabo! Minima?
-          </p>
-          <span className="comment-date">replied 1d ago</span>
-        </div>
-        <div className="comment">
-          <h3 className="comment-username">@comment person</h3>
-          <p className="comment-body">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-            Repellendus ducimus doloribus possimus similique tempora ex quas,
-            commodi sequi, dicta tenetur magni nisi porro tempore vero aliquid
-            in eligendi explicabo! Minima?
-          </p>
-          <span className="comment-date">replied 1d ago</span>
-        </div>
-        <div className="comment">
-          <h3 className="comment-username">@comment person</h3>
-          <p className="comment-body"> Minima?</p>
-          <span className="comment-date">replied 1d ago</span>
-        </div>
-      </div>
+      <Comments isLoading={isLoading} postId={id} setIsLoading={setIsLoading}/>
     </div>
   );
 };

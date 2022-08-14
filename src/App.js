@@ -16,6 +16,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuthContext();
 
+  console.log(allposts);
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/post")
@@ -32,7 +34,6 @@ function App() {
         axios.get("http://localhost:4000/api/like", {
           headers: { jwtToken: user.token }
         }).then(res => {
-          console.log(res.data);
           setAllLikes(res.data.likedPosts.map(like => like.PostId))
         }).catch(error => {
           console.log(error);
@@ -68,6 +69,8 @@ function App() {
                 setAllPosts={setAllPosts}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
+                allLikes={allLikes}
+                setAllLikes={setAllLikes}
               />
             }
           />

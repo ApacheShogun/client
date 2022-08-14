@@ -155,14 +155,6 @@ const Modal = ({
 
       {toEdit && (
         <>
-          {/* <input
-            type="text"
-            placeholder="edit post"
-            className="edit-post-input"
-            name="newPostText"
-            value={newPostText}
-            onChange={(e) => setNewPostText(e.target.value)}
-          /> */}
           <h2>Update your post</h2>
           <Formik
             initialValues={initialvalues}
