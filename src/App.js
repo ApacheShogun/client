@@ -9,36 +9,38 @@ import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import axios from "axios";
 import { useAuthContext } from "./hooks/useAuthContext";
+import Error404 from "./pages/Error404/Error404";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   const [allposts, setAllPosts] = useState([]);
-  const [allLikes, setAllLikes] = useState([])
+  const [allLikes, setAllLikes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuthContext();
-
-  console.log(allposts);
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/api/post")
       .then((res) => {
         setAllPosts(res.data.listofposts);
-        
       })
       .catch((error) => {
         console.log(error);
       });
 
-      // puts all the liked post in state if the user is logged in
-      if(user){
-        axios.get("http://localhost:4000/api/like", {
-          headers: { jwtToken: user.token }
-        }).then(res => {
-          setAllLikes(res.data.likedPosts.map(like => like.PostId))
-        }).catch(error => {
-          console.log(error);
+    // puts all the liked post in state if the user is logged in
+    if (user) {
+      axios
+        .get("http://localhost:4000/api/like", {
+          headers: { jwtToken: user.token },
         })
-      }
+        .then((res) => {
+          setAllLikes(res.data.likedPosts.map((like) => like.PostId));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, [user]);
 
   return (
@@ -46,6 +48,7 @@ function App() {
       <div className="App">
         <Navbar />
         <Routes>
+          {/* the home page */}
           <Route
             path="/"
             element={
@@ -59,9 +62,14 @@ function App() {
               />
             }
           />
+
+          {/* sign up page */}
           <Route path="/signup" element={<SignUp />} />
+
+          {/* login page */}
           <Route path="/login" element={<Login />} />
 
+          {/* single post page */}
           <Route
             path="/post/:id"
             element={
@@ -74,6 +82,20 @@ function App() {
               />
             }
           />
+
+          <Route
+            path="/profile/:id"
+            element={
+              <Profile
+                allLikes={allLikes}
+                setAllLikes={setAllLikes}
+                setAllPosts={setAllPosts}
+              />
+            }
+          />
+
+          {/* 404 page */}
+          <Route path="*" element={<Error404 />} />
         </Routes>
       </div>
     </BrowserRouter>

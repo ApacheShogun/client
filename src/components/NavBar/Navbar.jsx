@@ -1,5 +1,6 @@
 import "./NavBar.css";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { CgProfile } from "react-icons/cg";
 import Sidebar from "./Sidebar";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -40,11 +41,13 @@ const Navbar = () => {
         ></div>
 
         <ul className="nav-links">
-          <li>About</li>
           {user ? (
             <>
               <li>
-                <Link to="/">{user.username}</Link>
+                <CgProfile 
+                size='1.5em'
+                />
+                <Link to={`/profile/${user.id}`}>{user.username}</Link>
               </li>
               <li onClick={logout}>
                 <Link to="/login"> Log out</Link>

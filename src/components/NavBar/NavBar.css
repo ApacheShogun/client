@@ -31,7 +31,7 @@
 
 .logo a,
 .nav-links a,
-.sidebar li a{
+.sidebar li a {
   color: white;
 }
 
@@ -42,8 +42,6 @@
 .nav-links {
   display: none;
 }
-
-
 
 .sidebar {
   position: fixed;
@@ -62,6 +60,9 @@
 .sidebar li {
   list-style: none;
   padding: 1em 1.8em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
 .openSidebar {
@@ -90,17 +91,21 @@
   display: block;
 }
 
-@media (min-width : 992px) {
-  .GiHamburgerMenu{
+@media (min-width: 992px) {
+  .GiHamburgerMenu {
     display: none;
   }
 
-  .nav-links{
+  .nav-links {
     display: flex;
   }
 
   .nav-links li {
     list-style: none;
     margin-left: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
   }
 }

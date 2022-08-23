@@ -1,0 +1,134 @@
+.profile-page {
+  width: 100%;
+  height: auto;
+}
+
+.profile-bg{
+  z-index: -1;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: url("../../assets/nebula.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.profile-container {
+  color: white;
+  display: flex;
+  padding-top: 4em;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border: 2px solid white;
+  border-radius: 50%;
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar h1 {
+  text-transform: uppercase;
+}
+
+.profile-username {
+  font-size: 1.5rem;
+  margin-bottom: 1em;
+}
+
+.follow-btn {
+  padding: 0.5em 1.5em;
+  background-color: #02b9f2;
+  border-radius: 0.3em;
+  font-weight: 700;
+  margin-bottom: 1em;
+  cursor: pointer;
+}
+
+.unfollow-btn{
+  padding: 0.5em 1.5em;
+  background-color: #ff9900;
+  border-radius: 0.3em;
+  font-weight: 700;
+  margin-bottom: 1em;
+  cursor: pointer;
+}
+
+.follower-count {
+  font-weight: 700;
+  margin-bottom: 3em;
+}
+
+.profile-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-tabs{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    padding: 0 1em;
+    max-width: 650px;
+    font-weight: 700;
+    font-size: 1.5rem;
+    
+}
+
+.profile-posts-tab,
+.profile-follower-tab{
+  cursor: pointer;
+}
+
+.show-tab {
+    padding-bottom: .5em;
+   border-bottom: .1em solid white;
+}
+
+.profile-posts{
+  margin-top: 3em;
+  width: 90%;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.profile-follower-list{
+  margin-top: 3em;
+  width: 80%;
+  flex-direction: column;
+}
+
+.follower-list{
+  padding: 1em;
+  align-self: center;
+}
+
+.follower-list h1{
+  color: white;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 576px) {
+  .profile-posts {
+    padding: 1.8em 3em;
+  }
+}
+
+@media (min-width: 770px) {
+  .profile-posts,
+  .profile-follower-list{
+    max-width: 776px;
+    width: 80%;
+  }
+}

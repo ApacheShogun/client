@@ -185,7 +185,9 @@
   .post-container,
   .news-container {
     display: flex;
+    max-width: 700px;
   }
+
 
   .news-container {
     align-self: flex-start;
@@ -219,6 +221,7 @@
     flex-direction: row;
     width: 80%;
     margin: 0 auto;
+    justify-content: space-around;
   }
 }
 

@@ -72,7 +72,7 @@ const Post = ({
             } else {
               const likesArray = prev.Likes;
               likesArray.pop();
-              return { ...prev, Likes: likesArray };
+              return { ...prev, Likes: [likesArray] };
             }
           } else {
             return prev;
@@ -87,7 +87,7 @@ const Post = ({
               } else {
                 const likesArray = p.Likes;
                 likesArray.pop();
-                return { ...p, Likes: likesArray };
+                return { ...p, Likes: [likesArray] };
               }
             } else {
               return p;
@@ -127,7 +127,7 @@ const Post = ({
     <div className="single-post-container">
       <div className="single-post" key={singlePost.id}>
         <div className="post-user-info">
-          <p className="post-username">@{singlePost.username}</p>
+          <p className="post-username" onClick={() => navigate(`/profile/${singlePost.UserId}`)}>@{singlePost.username}</p>
           <p className="post-posted-date">posted {date()}</p>
         </div>
         <p className="post-comment-text">{singlePost.postText}</p>

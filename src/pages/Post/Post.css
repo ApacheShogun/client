@@ -69,6 +69,7 @@
 .post-username {
   font-size: 1.3rem;
   font-weight: 700;
+  cursor: pointer;
 }
 
 .post-posted-date {

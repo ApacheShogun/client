@@ -24,8 +24,10 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
     postImg: Yup.mixed(),
   });
 
-  const handleSubmit = (data) => {
-    setIsLoading(true)
+  const handleSubmit = (data, onSubmitProps) => {
+    
+    setIsLoading(true);
+    onSubmitProps.resetForm()
     // if user is not logged in
     if (!user) {
       console.log("log in");
@@ -39,12 +41,12 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
           headers: { jwtToken: user.token },
         })
         .then((res) => {
-          
           const newPost = res.data.post;
-          newPost.Likes = []
+          newPost.Likes = [];
+          newPost.Comments = [];
           console.log(newPost);
           setAllPosts((prev) => [...prev, newPost]);
-          setIsLoading(false)
+          setIsLoading(false);
         })
         .catch((error) => {
           console.log(error.response.data.error);
@@ -76,9 +78,10 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
             )
             .then((res) => {
               const newPost = res.data.post;
-              newPost.Likes = []
+              newPost.Likes = [];
+              newPost.Comments = [];
               setAllPosts((prev) => [...prev, newPost]);
-              setIsLoading(false)
+              setIsLoading(false);
             });
         })
         .catch((err) => {

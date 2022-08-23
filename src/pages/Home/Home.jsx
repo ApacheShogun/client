@@ -1,11 +1,11 @@
 import Card from "../../components/Cards/Card";
 import "./Home.css";
-import { news } from "../../assets/apiNews";
 import { useEffect, useState } from "react";
 import { AiOutlineRocket } from "react-icons/ai";
 import { BsNewspaper } from "react-icons/bs";
 import { formatDistanceStrict } from "date-fns";
 import CreatePostForm from "../../components/CreatePost/CreatePost";
+import axios from "axios";
 
 const Home = ({
   allposts,
@@ -15,21 +15,37 @@ const Home = ({
   allLikes,
   setAllLikes,
 }) => {
-  // console.log(allposts);
   const [showTabs, setShowTabs] = useState(false);
   const [toggleTabs, setToggleTabs] = useState(1);
+  const [newsList, setNewsList] = useState([])
 
   useEffect(() => {
     window.addEventListener("scroll", showTheMobileTabs);
+    window.addEventListener('resize', ScreenWidth);
+
+    axios.get('https://api.spaceflightnewsapi.net/v3/articles?_limit=10').then(res => {
+      console.log(res.data);
+      setNewsList(res.data)
+    }).catch(error => {
+      console.log(error);
+    })
 
     return () => {
       window.removeEventListener("scroll", showTheMobileTabs);
+    window.addEventListener('resize', ScreenWidth);
+
     };
   }, []);
 
   const showTheMobileTabs = () => {
     window.scrollY >= 105 ? setShowTabs(true) : setShowTabs(false);
   };
+
+  const ScreenWidth = () => {
+    if(window.innerWidth > 992){
+      setToggleTabs(1)
+    }
+  }
 
   return (
     <div className="home-page">
@@ -82,7 +98,7 @@ const Home = ({
           >
             <h1>News In Orbit</h1>
             <div className="news-wrapper">
-              {news.map((article) => (
+              {newsList.map((article) => (
                 <div className="news-article" key={article.id}>
                   <div className="news-content">
                     <span className="news-time">

@@ -6,15 +6,16 @@ import { useAuthContext } from "../../../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { formatDistanceStrict } from "date-fns";
-import { AiFillLike } from "react-icons/ai";
+import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import CommentModal from "./CommentModal";
 import { Image } from "cloudinary-react";
 
 const Comments = ({ isLoading, postId, setIsLoading }) => {
   const [allComments, setAllComments] = useState([]);
-  const [toggleCommentModal, setToggleCommentModal] = useState(false)
-  const [toCommentDelete, setToCommentDelete] = useState(false)
-  const [toCommentEdit, setToCommentEdit] = useState(false)
+  const [allCommentsLikes, setAllCommentsLikes] = useState([]);
+  const [toggleCommentModal, setToggleCommentModal] = useState(false);
+  const [toCommentDelete, setToCommentDelete] = useState(false);
+  const [toCommentEdit, setToCommentEdit] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuthContext();
 
@@ -22,13 +23,26 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
     axios
       .get(`http://localhost:4000/api/comment/${postId}`)
       .then((res) => {
-        console.log(res.data);
         setAllComments(res.data.comments);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [postId]);
+
+    // get all user comment likes if user is logged in
+    if (user) {
+      axios
+        .get("http://localhost:4000/api/comment/likes/allLikes", {
+          headers: { jwtToken: user.token },
+        })
+        .then((res) => {
+          setAllCommentsLikes(res.data.likedComments.map(like => like.CommentId));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [postId, user]);
 
   const initialvalues = {
     commentText: "",
@@ -41,8 +55,9 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
   });
 
   // post a comment
-  const handleSubmit = (data) => {
+  const handleSubmit = (data, onSubmitProps) => {
     setIsLoading(true);
+    onSubmitProps.resetForm()
     // if user is not logged in
     if (!user) {
       console.log("log in");
@@ -57,7 +72,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
           {
             commentText: data.commentText,
             commentImg: "",
-            PostId: postId
+            PostId: postId,
           },
           {
             headers: { jwtToken: user.token },
@@ -72,7 +87,6 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
           console.log(error.response.data.error);
         });
     } else {
-
       // if user includes a image with the post
       const formData = new FormData();
       formData.append("file", data.commentImg);
@@ -92,7 +106,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
               {
                 commentText: data.commentText,
                 commentImg: fileName,
-                PostId: postId
+                PostId: postId,
               },
               {
                 headers: { jwtToken: user.token },
@@ -100,9 +114,9 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
             )
             .then((res) => {
               const newComment = res.data.comment;
-              // newComment.Likes = []
+              newComment.CommentLikes = []
               setAllComments((prev) => [...prev, newComment]);
-              setIsLoading(false)
+              setIsLoading(false);
             });
         })
         .catch((err) => {
@@ -112,14 +126,62 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
   };
 
   const showCommentDelete = () => {
-    setToggleCommentModal(true)
-    setToCommentDelete(true)
-  }
+    setToggleCommentModal(true);
+    setToCommentDelete(true);
+  };
 
   const showCommentEdit = () => {
-    setToggleCommentModal(true)
-    setToCommentEdit(true)
-  }
+    setToggleCommentModal(true);
+    setToCommentEdit(true);
+  };
+
+  // like a comment
+  const likeComment = (CommentId) => {
+    if (!user) {
+      console.log("log in");
+      return navigate("/login");
+    }
+
+    axios
+      .post(
+        "http://localhost:4000/api/comment/likes",
+        {
+          CommentId,
+        },
+        {
+          headers: { jwtToken: user.token },
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setAllComments(prev => {
+          return prev.map((c) => {
+            if (c.id === CommentId) {
+              if (res.data.liked) {
+                return { ...c, CommentLikes: [...c.CommentLikes, res.data] };
+              } else {
+                const likesArray = c.CommentLikes;
+                likesArray.pop();
+                console.log(likesArray);
+                return { ...c, CommentLikes: [likesArray]};
+              }
+            } else {
+              return c;
+            }
+          });
+        })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+          // some jank way of toggling the liked icons based on the current login user
+    if (allCommentsLikes.includes(CommentId)) {
+      setAllCommentsLikes((prev) => prev.filter((i) => i !== CommentId));
+    } else {
+      setAllCommentsLikes((prev) => [...prev, CommentId]);
+    }
+  };
 
   return (
     <div className="comment-container">
@@ -159,76 +221,79 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
                   </button>
                 </div>
               )}
-
             </Form>
           )}
         </Formik>
       </div>
       <div className="comment-flex">
-      {allComments.map((comment) => (
-        <div className="single-comment" key={comment.id}>
-          <div className="post-user-info">
-            <p className="post-username">@{comment.username}</p>
-            <p className="post-posted-date">
-              replied{" "}
-              {formatDistanceStrict(new Date(comment.updatedAt), new Date(), {
-                addSuffix: true,
-              })}
-            </p>
-          </div>
-          <p className="post-comment-text">{comment.commentText}</p>
-          {comment.commentImg && (
-            <div className="post-img-container">
-              <Image cloudName="dwfb3adcj" publicId={comment.commentImg} />
+        {allComments.map((comment) => (
+          <div className="single-comment" key={comment.id}>
+            <div className="post-user-info">
+              <p className="post-username" onClick={() => navigate(`/profile/${comment.UserId}`)}>@{comment.username}</p>
+              <p className="post-posted-date">
+                replied{" "}
+                {formatDistanceStrict(new Date(comment.updatedAt), new Date(), {
+                  addSuffix: true,
+                })}
+              </p>
             </div>
-          )}
-          <div className="post-interactions">
-            <div className="post-likes">
-              <AiFillLike color="#02b9f2" size="1.5em" className="like-icon" />
-              {/* the button shows blue if user is logged in and liked the post */}
-              {/* {user && allLikes.includes(comment.id) ? (
-              <AiFillLike
-                color="#02b9f2"
-                size="1.5em"
-                className="like-icon"
-                onClick={() => handleLike(comment.id)}
-              />
-            ) : (
-              <AiOutlineLike
-                size="1.5em"
-                className="like-icon"
-                onClick={() => handleLike(comment.id)}
-              />
-            )} */}
-              <p className="post-like-amount">likes</p>
+            <p className="post-comment-text">{comment.commentText}</p>
+            {comment.commentImg && (
+              <div className="post-img-container">
+                <Image cloudName="dwfb3adcj" publicId={comment.commentImg} />
+              </div>
+            )}
+            <div className="post-interactions">
+              <div className="post-likes">
+                {/* the button shows blue if user is logged in and liked the post */}
+                {user && allCommentsLikes.includes(comment.id) ? (
+                  <AiFillLike
+                    color="#02b9f2"
+                    size="1.5em"
+                    className="like-icon"
+                    onClick={() => likeComment(comment.id)}
+                  />
+                ) : (
+                  <AiOutlineLike
+                    size="1.5em"
+                    className="like-icon"
+                    onClick={() => likeComment(comment.id)}
+                  />
+                )}
+                <p className="post-like-amount">
+                  {comment.CommentLikes? comment.CommentLikes.length: 0} likes
+                </p>
+              </div>
+
+              {/* if user is loggin and if their username is the same as the post username */}
+              {user && user.username === comment.username && (
+                <div className="post-functions">
+                  <button className="post-edit" onClick={showCommentEdit}>
+                    EDIT
+                  </button>
+                  <button className="post-delete" onClick={showCommentDelete}>
+                    DELETE
+                  </button>
+                </div>
+              )}
             </div>
 
-            {/* if user is loggin and if their username is the same as the post username */}
-            {user && user.username === comment.username && (
-              <div className="post-functions">
-                <button className="post-edit" onClick={showCommentEdit}>EDIT</button>
-                <button className="post-delete" onClick={showCommentDelete}>DELETE</button>
+            {toggleCommentModal && (
+              <div className="post-backdrop">
+                <CommentModal
+                  setToggleCommentModal={setToggleCommentModal}
+                  setToCommentDelete={setToCommentDelete}
+                  setToCommentEdit={setToCommentEdit}
+                  toCommentDelete={toCommentDelete}
+                  toCommentEdit={toCommentEdit}
+                  commentId={comment.id}
+                  commentText={comment.commentText}
+                  setAllComments={setAllComments}
+                />
               </div>
             )}
           </div>
-
-        {toggleCommentModal && (
-          <div className="post-backdrop">
-            <CommentModal 
-            setToggleCommentModal={setToggleCommentModal}
-            setToCommentDelete={setToCommentDelete}
-            setToCommentEdit={setToCommentEdit}
-            toCommentDelete={toCommentDelete}
-            toCommentEdit={toCommentEdit}
-            commentId={comment.id}
-            commentText={comment.commentText}
-            setAllComments={setAllComments}
-            />
-          </div>
-        )}
-        </div>
-      ))}
-
+        ))}
       </div>
     </div>
   );

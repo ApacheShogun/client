@@ -34,11 +34,11 @@ const Card = ({ post, allLikes, setAllLikes, setAllPosts }) => {
           return prev.map((p) => {
             if (p.id === id) {
               if (res.data.liked) {
-                return { ...p, Likes: [...p.Likes, 0] };
+                return { ...p, Likes: [...p.Likes, res.data] };
               } else {
                 const likesArray = p.Likes;
-                likesArray.pop();
-                return { ...p, Likes: likesArray };
+                likesArray.pop()
+                return { ...p, Likes: [likesArray] };
               }
             } else {
               return p;
@@ -61,7 +61,7 @@ const Card = ({ post, allLikes, setAllLikes, setAllPosts }) => {
   return (
     <div className="card-post">
       <div className="card-user-info">
-        <p className="card-username">@{post.username}</p>
+        <p className="card-username" onClick={() => navigate(`/profile/${post.UserId}`)}>@{post.username}</p>
         <p className="card-posted-date">
           posted{" "}
           {formatDistanceStrict(new Date(post.updatedAt), new Date(), {
