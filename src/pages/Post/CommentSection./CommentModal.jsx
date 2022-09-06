@@ -42,7 +42,7 @@ const CommentModal = ({
     setCommentLoading(true);
 
     axios
-      .delete(`http://localhost:4000/api/comment/${commentId}`, {
+      .delete(`https://nebula-poster-backend.herokuapp.com/api/comment/${commentId}`, {
         headers: { jwtToken: user.token },
       })
       .then((res) => {
@@ -69,7 +69,7 @@ const CommentModal = ({
     if (!data.commentImg) {
       axios
         .put(
-          "http://localhost:4000/api/comment",
+          "https://nebula-poster-backend.herokuapp.com/api/comment",
           {
             id: commentId,
             commentText: data.commentText,
@@ -110,7 +110,7 @@ const CommentModal = ({
           // then send all the text and img asset id to the database
           axios
             .put(
-              "http://localhost:4000/api/comment",
+              "https://nebula-poster-backend.herokuapp.com/api/comment",
               {
                 id: commentId,
                 commentText: data.commentText,

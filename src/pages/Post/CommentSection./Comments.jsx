@@ -21,7 +21,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/comment/${postId}`)
+      .get(`https://nebula-poster-backend.herokuapp.com/api/comment/${postId}`)
       .then((res) => {
         setAllComments(res.data.comments);
       })
@@ -32,7 +32,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
     // get all user comment likes if user is logged in
     if (user) {
       axios
-        .get("http://localhost:4000/api/comment/likes/allLikes", {
+        .get("https://nebula-poster-backend.herokuapp.com/api/comment/likes/allLikes", {
           headers: { jwtToken: user.token },
         })
         .then((res) => {
@@ -68,7 +68,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
     if (!data.commentImg) {
       axios
         .post(
-          "http://localhost:4000/api/comment",
+          "https://nebula-poster-backend.herokuapp.com/api/comment",
           {
             commentText: data.commentText,
             commentImg: "",
@@ -102,7 +102,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
           // then send all the text and img asset id to the database
           axios
             .post(
-              "http://localhost:4000/api/comment",
+              "https://nebula-poster-backend.herokuapp.com/api/comment",
               {
                 commentText: data.commentText,
                 commentImg: fileName,
@@ -144,7 +144,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
 
     axios
       .post(
-        "http://localhost:4000/api/comment/likes",
+        "https://nebula-poster-backend.herokuapp.com/api/comment/likes",
         {
           CommentId,
         },

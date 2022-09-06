@@ -31,7 +31,7 @@ const SignUp = () => {
     setIsError(null);
 
     axios
-      .post("http://localhost:4000/api/user/signup", data)
+      .post("https://nebula-poster-backend.herokuapp.com/api/user/signup", data)
       .then((res) => {
         setIsLoading(false);
         navigator("/");

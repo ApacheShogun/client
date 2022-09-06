@@ -25,7 +25,7 @@ const Profile = (props) => {
     setToggleProfileTabs(1)
 
     axios
-      .get(`http://localhost:4000/api/user/profile/${id}`)
+      .get(`https://nebula-poster-backend.herokuapp.com/api/user/profile/${id}`)
       .then((res) => {
         setUserProfile(res.data.userInfo);
         setFollowerList(res.data.userInfo.Followers);
@@ -41,7 +41,7 @@ const Profile = (props) => {
       });
 
     axios
-      .get(`http://localhost:4000/api/post/profile/user/${id}`)
+      .get(`https://nebula-poster-backend.herokuapp.com/api/post/profile/user/${id}`)
       .then((res) => {
         setUserPosts(res.data.posts);
       })
@@ -59,7 +59,7 @@ const Profile = (props) => {
 
     axios
       .post(
-        "http://localhost:4000/api/like",
+        "https://nebula-poster-backend.herokuapp.com/api/like",
         {
           PostId: id,
         },
@@ -107,7 +107,7 @@ const Profile = (props) => {
 
     axios
       .post(
-        "http://localhost:4000/api/user/follow",
+        "https://nebula-poster-backend.herokuapp.com/api/user/follow",
         {
           FollowerId,
           UserId: userProfile.id,

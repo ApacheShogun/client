@@ -19,7 +19,7 @@ const Card = ({ post, allLikes, setAllLikes, setAllPosts }) => {
 
     axios
       .post(
-        "http://localhost:4000/api/like",
+        "https://nebula-poster-backend.herokuapp.com/api/like",
         {
           PostId: id,
         },

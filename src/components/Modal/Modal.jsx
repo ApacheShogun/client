@@ -53,7 +53,7 @@ const Modal = ({
     if (!data.postImg) {
       axios
         .put(
-          "http://localhost:4000/api/post",
+          "https://nebula-poster-backend.herokuapp.com/api/post",
           {
             id: postId,
             postText: data.postText,
@@ -90,7 +90,7 @@ const Modal = ({
           // then send all the text and img asset id to the database
           axios
             .put(
-              "http://localhost:4000/api/post",
+              "https://nebula-poster-backend.herokuapp.com/api/post",
               {
                 id: postId,
                 postText: data.postText,
@@ -117,7 +117,7 @@ const Modal = ({
   const deletePost = (id) => {
     setIsLoading(true)
     axios
-      .delete(`http://localhost:4000/api/post/${id}`, {
+      .delete(`https://nebula-poster-backend.herokuapp.com/api/post/${id}`, {
         headers: { jwtToken: user.token },
       })
       .then((res) => {
