@@ -4,11 +4,13 @@ import * as Yup from "yup";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const SignUp = () => {
   const navigator = useNavigate();
   const [isError, setIsError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
+  const { dispatch } = useAuthContext()
 
   const initialvalues = {
     username: "",
@@ -35,6 +37,8 @@ const SignUp = () => {
       .then((res) => {
         setIsLoading(false);
         navigator("/");
+        localStorage.setItem('user', JSON.stringify(res.data))
+        dispatch({type: 'LOGIN', payload: res.data})
         console.log(res.data);
       })
       .catch((error) => {

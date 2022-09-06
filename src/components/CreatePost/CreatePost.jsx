@@ -50,6 +50,8 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
         })
         .catch((error) => {
           console.log(error.response.data.error);
+          alert(error.response.data.error)
+          setIsLoading(false);
         });
     } else {
       // if user includes a image with the post
@@ -86,6 +88,8 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
         })
         .catch((err) => {
           console.log(err);
+          setIsLoading(false);
+          alert(err.response.data.error)
         });
     }
   };

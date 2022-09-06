@@ -119,6 +119,12 @@
   font-size: 1.5rem;
 }
 
+.no-followers {
+  padding: 1em;
+  align-self: center;
+  color: white;
+}
+
 @media (min-width: 576px) {
   .profile-posts {
     padding: 1.8em 3em;

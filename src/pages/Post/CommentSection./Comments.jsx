@@ -81,7 +81,9 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
         .then((res) => {
           console.log(res.data);
           setIsLoading(false);
-          setAllComments((prev) => [...prev, res.data.comment]);
+          const newComment = res.data.comment;
+              newComment.CommentLikes = []
+          setAllComments((prev) => [...prev, newComment]);
         })
         .catch((error) => {
           console.log(error.response.data.error);

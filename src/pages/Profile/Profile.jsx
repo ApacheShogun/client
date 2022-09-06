@@ -21,8 +21,7 @@ const Profile = (props) => {
   const [followerList, setFollowerList] = useState([]);
 
   useEffect(() => {
-
-    setToggleProfileTabs(1)
+    setToggleProfileTabs(1);
 
     axios
       .get(`https://nebula-poster-backend.herokuapp.com/api/user/profile/${id}`)
@@ -41,7 +40,9 @@ const Profile = (props) => {
       });
 
     axios
-      .get(`https://nebula-poster-backend.herokuapp.com/api/post/profile/user/${id}`)
+      .get(
+        `https://nebula-poster-backend.herokuapp.com/api/post/profile/user/${id}`
+      )
       .then((res) => {
         setUserPosts(res.data.posts);
       })
@@ -145,8 +146,8 @@ const Profile = (props) => {
 
   return (
     <div className="profile-page">
-    <div className="profile-bg"></div>
-      
+      <div className="profile-bg"></div>
+
       <div className="profile-container">
         <div className="profile-avatar">
           <h1>{userProfile?.username?.charAt(0)}</h1>
@@ -285,6 +286,10 @@ const Profile = (props) => {
           className="profile-follower-list"
           style={{ display: toggleProfileTabs === 2 ? "flex" : "none" }}
         >
+          {
+           followerList.length === 0 && <h3 className="no-followers">This user have no followers yet</h3>
+          }
+
           {followerList.map((follower) => (
             <div className="follower-list" key={follower.id}>
               <h1 onClick={() => navigate(`/profile/${follower.FollowerId}`)}>

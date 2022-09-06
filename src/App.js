@@ -18,6 +18,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuthContext();
 
+  console.log(user);
+
   useEffect(() => {
     axios
       .get("https://nebula-poster-backend.herokuapp.com/api/post")

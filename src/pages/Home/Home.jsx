@@ -24,7 +24,6 @@ const Home = ({
     window.addEventListener('resize', ScreenWidth);
 
     axios.get('https://api.spaceflightnewsapi.net/v3/articles?_limit=10').then(res => {
-      console.log(res.data);
       setNewsList(res.data)
     }).catch(error => {
       console.log(error);
