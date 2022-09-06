@@ -20,7 +20,7 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
   };
 
   const validationSchema = Yup.object().shape({
-    postText: Yup.string().max(140).required(),
+    postText: Yup.string().max(140).required('fill in text field before posting'),
     postImg: Yup.mixed(),
   });
 

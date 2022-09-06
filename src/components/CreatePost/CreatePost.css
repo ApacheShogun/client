@@ -12,6 +12,11 @@
     flex-direction: column;
 }
 
+.createform span {
+    color: red;
+    margin-top: 1em;
+}
+
 #createpost{
     padding: .68em;
     border: none;
