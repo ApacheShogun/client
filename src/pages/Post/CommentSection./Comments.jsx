@@ -50,7 +50,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
   };
 
   const validationSchema = Yup.object().shape({
-    commentText: Yup.string().max(140).required(),
+    commentText: Yup.string().max(140).required("don't leave text input blank"),
     commentImg: Yup.mixed(),
   });
 
@@ -87,6 +87,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
         })
         .catch((error) => {
           console.log(error.response.data.error);
+          alert(error.response.data.error);
         });
     } else {
       // if user includes a image with the post
@@ -96,7 +97,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
 
       // send the postImg data to cloudinary
       axios
-        .post("https://api.cloudinary.com/v1_1/dwfb3adcj/upload", formData)
+        .post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData)
         .then((res) => {
           // get back the image asset id from cloudary
           const fileName = res.data.public_id;
@@ -123,6 +124,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
         })
         .catch((err) => {
           console.log(err);
+          alert(err.response.data.error);
         });
     }
   };
@@ -242,7 +244,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
             <p className="post-comment-text">{comment.commentText}</p>
             {comment.commentImg && (
               <div className="post-img-container">
-                <Image cloudName="dwfb3adcj" publicId={comment.commentImg} />
+                <Image cloudName={process.env.REACT_APP_CLOUD_NAME} publicId={comment.commentImg} />
               </div>
             )}
             <div className="post-interactions">

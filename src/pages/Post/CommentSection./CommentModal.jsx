@@ -26,7 +26,7 @@ const CommentModal = ({
   };
 
   const validationSchema = Yup.object().shape({
-    commentText: Yup.string().max(140).required(),
+    commentText: Yup.string().max(140).required("don't leave text input blank"),
     commentImg: Yup.mixed(),
   });
 
@@ -53,6 +53,7 @@ const CommentModal = ({
       })
       .catch((error) => {
         console.log(error);
+        alert(error.response.data.error);
       });
   };
 
@@ -102,7 +103,7 @@ const CommentModal = ({
 
       // send the postImg data to cloudinary
       axios
-        .post("https://api.cloudinary.com/v1_1/dwfb3adcj/upload", formData)
+        .post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData)
         .then((res) => {
           // get back the image asset id from cloudary
           const fileName = res.data.public_id;
@@ -139,6 +140,7 @@ const CommentModal = ({
         })
         .catch((err) => {
           console.log(err);
+          alert(err.response.data.error);
         });
     }
   };

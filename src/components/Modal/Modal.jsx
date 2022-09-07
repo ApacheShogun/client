@@ -16,11 +16,11 @@ const Modal = ({
   postId,
   postText,
   setAllPosts,
-  setSinglePost
+  setSinglePost,
 }) => {
   const navigate = useNavigate();
   const { user } = useAuthContext();
-  const [modalLoading, setModalLoading] = useState(false)
+  const [modalLoading, setModalLoading] = useState(false);
 
   const initialvalues = {
     postText: postText,
@@ -28,7 +28,7 @@ const Modal = ({
   };
 
   const validationSchema = Yup.object().shape({
-    postText: Yup.string().max(140).required(),
+    postText: Yup.string().max(140).required("don't leave text input blank"),
     postImg: Yup.mixed(),
   });
 
@@ -41,8 +41,7 @@ const Modal = ({
 
   // update post
   const updatePost = (data) => {
-    
-    setModalLoading(true)
+    setModalLoading(true);
 
     if (!user) {
       console.log("log in");
@@ -65,14 +64,15 @@ const Modal = ({
         )
         .then((res) => {
           console.log(res.data);
-          setModalLoading(false)
-          setSinglePost( prev => ({...prev, postText: data.postText}))
+          setModalLoading(false);
+          setSinglePost((prev) => ({ ...prev, postText: data.postText }));
           closeModal();
           // const newPost = res.data.post
           // setAllPosts(prev => [...prev, newPost])
         })
         .catch((error) => {
           console.log(error.response.data.error);
+          alert(error.response.data.error);
         });
     } else {
       // if user includes a image with the post
@@ -82,7 +82,7 @@ const Modal = ({
 
       // send the postImg data to cloudinary
       axios
-        .post("https://api.cloudinary.com/v1_1/dwfb3adcj/upload", formData)
+        .post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData)
         .then((res) => {
           // get back the image asset id from cloudary
           const fileName = res.data.public_id;
@@ -102,28 +102,37 @@ const Modal = ({
             )
             .then((res) => {
               console.log(res.data);
-              setModalLoading(false)
-              setSinglePost( prev => ({...prev, postText: data.postText, postImg: fileName}))
+              setModalLoading(false);
+              setSinglePost((prev) => ({
+                ...prev,
+                postText: data.postText,
+                postImg: fileName,
+              }));
               closeModal();
             });
         })
         .catch((err) => {
           console.log(err);
+          alert(err.response.data.error);
         });
     }
   };
 
   // delete post
   const deletePost = (id) => {
-    setModalLoading(true)
+    setModalLoading(true);
     axios
       .delete(`https://nebula-poster-backend.herokuapp.com/api/post/${id}`, {
         headers: { jwtToken: user.token },
       })
       .then((res) => {
-        setModalLoading(false)
+        setModalLoading(false);
         setAllPosts((prev) => prev.filter((post) => post.id !== id));
         navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err.response.data.error);
       });
   };
 

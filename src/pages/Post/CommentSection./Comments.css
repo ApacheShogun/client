@@ -9,6 +9,11 @@
     flex-direction: column;
     margin-bottom: 2em;
   }
+
+  .createCommentform span {
+    color: red;
+    margin-top: 1em;
+  }
   
   .comment-flex{
     display: flex;

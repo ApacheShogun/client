@@ -61,7 +61,7 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
 
       // send the postImg data to cloudinary
       axios
-        .post("https://api.cloudinary.com/v1_1/dwfb3adcj/upload", formData)
+        .post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData)
         .then((res) => {
           // get back the image asset id from cloudary
           const fileName = res.data.public_id;

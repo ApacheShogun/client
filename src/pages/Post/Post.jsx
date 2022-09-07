@@ -133,7 +133,7 @@ const Post = ({
         <p className="post-comment-text">{singlePost.postText}</p>
         {singlePost.postImg && (
           <div className="post-img-container">
-            <Image cloudName="dwfb3adcj" publicId={singlePost.postImg} />
+            <Image cloudName={process.env.REACT_APP_CLOUD_NAME} publicId={singlePost.postImg} />
           </div>
         )}
         <div className="post-interactions">

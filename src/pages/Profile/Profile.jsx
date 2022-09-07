@@ -239,7 +239,7 @@ const Profile = (props) => {
                 {post.postImg && (
                   <div className="card-img-container">
                     <Image
-                      cloudName="dwfb3adcj"
+                      cloudName={process.env.REACT_APP_CLOUD_NAME}
                       publicId={post.postImg}
                       loading="lazy"
                     />
