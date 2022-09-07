@@ -18,7 +18,7 @@ const Login = () => {
     setIsLoading(true)
     setIsError(null)
 
-    axios.post('https://nebula-poster-backend.herokuapp.com/api/user/login', data).then(res => {
+    axios.post(`${process.env.REACT_APP_API_DB}/api/user/login`, data).then(res => {
          setIsLoading(false)
          localStorage.setItem('user', JSON.stringify(res.data))
          dispatch({type: 'LOGIN', payload: res.data})

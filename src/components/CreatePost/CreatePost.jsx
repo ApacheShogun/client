@@ -37,7 +37,7 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
     // if user makes a post with just text and without a image
     if (!data.postImg) {
       axios
-        .post("https://nebula-poster-backend.herokuapp.com/api/post", data, {
+        .post(`${process.env.REACT_APP_API_DB}/api/post`, data, {
           headers: { jwtToken: user.token },
         })
         .then((res) => {
@@ -69,7 +69,7 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
           // then send all the text and img asset id to the database
           axios
             .post(
-              "https://nebula-poster-backend.herokuapp.com/api/post",
+              `${process.env.REACT_APP_API_DB}/api/post`,
               {
                 postText: data.postText,
                 postImg: fileName,

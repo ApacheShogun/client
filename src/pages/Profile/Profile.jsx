@@ -24,7 +24,7 @@ const Profile = (props) => {
     setToggleProfileTabs(1);
 
     axios
-      .get(`https://nebula-poster-backend.herokuapp.com/api/user/profile/${id}`)
+      .get(`${process.env.REACT_APP_API_DB}/api/user/profile/${id}`)
       .then((res) => {
         setUserProfile(res.data.userInfo);
         setFollowerList(res.data.userInfo.Followers);
@@ -41,7 +41,7 @@ const Profile = (props) => {
 
     axios
       .get(
-        `https://nebula-poster-backend.herokuapp.com/api/post/profile/user/${id}`
+        `${process.env.REACT_APP_API_DB}/api/post/profile/user/${id}`
       )
       .then((res) => {
         setUserPosts(res.data.posts);
@@ -60,7 +60,7 @@ const Profile = (props) => {
 
     axios
       .post(
-        "https://nebula-poster-backend.herokuapp.com/api/like",
+        `${process.env.REACT_APP_API_DB}/api/like`,
         {
           PostId: id,
         },
@@ -108,7 +108,7 @@ const Profile = (props) => {
 
     axios
       .post(
-        "https://nebula-poster-backend.herokuapp.com/api/user/follow",
+        `${process.env.REACT_APP_API_DB}/api/user/follow`,
         {
           FollowerId,
           UserId: userProfile.id,
@@ -214,6 +214,9 @@ const Profile = (props) => {
           className="profile-posts"
           style={{ display: toggleProfileTabs === 1 ? "flex" : "none" }}
         >
+          {
+           userPosts.length === 0 && <h3 className="no-followers">This user have no posts</h3>
+          }
           {userPosts.map((post) => (
             <div className="card-post" key={post.id}>
               <div className="card-user-info">
@@ -287,7 +290,7 @@ const Profile = (props) => {
           style={{ display: toggleProfileTabs === 2 ? "flex" : "none" }}
         >
           {
-           followerList.length === 0 && <h3 className="no-followers">This user have no followers yet</h3>
+           followerList.length === 0 && <h3 className="no-followers">This user have no followers</h3>
           }
 
           {followerList.map((follower) => (

@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("https://nebula-poster-backend.herokuapp.com/api/post")
+      .get(`${process.env.REACT_APP_API_DB}/api/post`)
       .then((res) => {
         setAllPosts(res.data.listofposts);
       })
@@ -31,7 +31,7 @@ function App() {
     // puts all the liked post in state if the user is logged in
     if (user) {
       axios
-        .get("https://nebula-poster-backend.herokuapp.com/api/like", {
+        .get(`${process.env.REACT_APP_API_DB}/api/like`, {
           headers: { jwtToken: user.token },
         })
         .then((res) => {

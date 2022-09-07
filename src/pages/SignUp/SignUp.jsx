@@ -33,7 +33,7 @@ const SignUp = () => {
     setIsError(null);
 
     axios
-      .post("https://nebula-poster-backend.herokuapp.com/api/user/signup", data)
+      .post(`${process.env.REACT_APP_API_DB}/api/user/signup`, data)
       .then((res) => {
         setIsLoading(false);
         navigator("/");

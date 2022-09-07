@@ -19,7 +19,7 @@ const Card = ({ post, allLikes, setAllLikes, setAllPosts }) => {
 
     axios
       .post(
-        "https://nebula-poster-backend.herokuapp.com/api/like",
+        `${process.env.REACT_APP_API_DB}/api/like`,
         {
           PostId: id,
         },

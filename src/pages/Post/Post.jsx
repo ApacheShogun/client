@@ -27,7 +27,7 @@ const Post = ({
 
   useEffect(() => {
     axios
-      .get(`https://nebula-poster-backend.herokuapp.com/api/post/${id}`)
+      .get(`${process.env.REACT_APP_API_DB}/api/post/${id}`)
       .then((res) => {
         setSinglePost(res.data);
       })
@@ -55,7 +55,7 @@ const Post = ({
 
     axios
       .post(
-        "https://nebula-poster-backend.herokuapp.com/api/like",
+        `${process.env.REACT_APP_API_DB}/api/like`,
         {
           PostId: id,
         },
