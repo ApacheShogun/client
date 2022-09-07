@@ -5,6 +5,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useState } from "react";
 
 const Modal = ({
   setToggleModal,
@@ -15,12 +16,11 @@ const Modal = ({
   postId,
   postText,
   setAllPosts,
-  isLoading,
-  setIsLoading,
   setSinglePost
 }) => {
   const navigate = useNavigate();
   const { user } = useAuthContext();
+  const [modalLoading, setModalLoading] = useState(false)
 
   const initialvalues = {
     postText: postText,
@@ -42,7 +42,7 @@ const Modal = ({
   // update post
   const updatePost = (data) => {
     
-    setIsLoading(true)
+    setModalLoading(true)
 
     if (!user) {
       console.log("log in");
@@ -65,7 +65,7 @@ const Modal = ({
         )
         .then((res) => {
           console.log(res.data);
-          setIsLoading(false)
+          setModalLoading(false)
           setSinglePost( prev => ({...prev, postText: data.postText}))
           closeModal();
           // const newPost = res.data.post
@@ -102,7 +102,7 @@ const Modal = ({
             )
             .then((res) => {
               console.log(res.data);
-              setIsLoading(false)
+              setModalLoading(false)
               setSinglePost( prev => ({...prev, postText: data.postText, postImg: fileName}))
               closeModal();
             });
@@ -115,13 +115,13 @@ const Modal = ({
 
   // delete post
   const deletePost = (id) => {
-    setIsLoading(true)
+    setModalLoading(true)
     axios
       .delete(`https://nebula-poster-backend.herokuapp.com/api/post/${id}`, {
         headers: { jwtToken: user.token },
       })
       .then((res) => {
-        setIsLoading(false)
+        setModalLoading(false)
         setAllPosts((prev) => prev.filter((post) => post.id !== id));
         navigate("/");
       });
@@ -181,7 +181,7 @@ const Modal = ({
                   }}
                 />
 
-                {isLoading ? (
+                {modalLoading ? (
                   <div className="isloadingIcon postloading"></div>
                 ) : (
                   <div className="edit-post-container">

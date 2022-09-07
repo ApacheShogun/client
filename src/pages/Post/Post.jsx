@@ -181,8 +181,6 @@ const Post = ({
               postId={singlePost.id}
               postText={singlePost.postText}
               setAllPosts={setAllPosts}
-              isLoading={isLoading}
-              setIsLoading={setIsLoading}
               setSinglePost={setSinglePost}
             />
           </div>
