@@ -149,7 +149,7 @@
   background-color: #030204;
   display: flex;
   justify-content: space-around;
-  padding: 1em;
+  padding: .5em 1em;
   transform: translateY(100%);
   transition: all 0.3s;
 }
@@ -161,8 +161,12 @@
 .tab-icon {
   cursor: pointer;
   padding: 0.5em;
-  border-radius: 55%;
+  border-radius: .65em;
   transition: all 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
 }
 
 .tab-icon:hover {
@@ -173,6 +177,7 @@
 .active-tab {
   padding: 0.5em;
   background-color: #d9d9d9;
+  color: black;
 }
 
 /* ON DESKTOP SCREENS */

@@ -18,7 +18,7 @@ const Sidebar = ({ sideBar, toggleSideBar, logout, user }) => {
           <CgProfile 
                 size='1.5em'
                 />
-            <Link to="/">{user.username}</Link>
+            <Link to={`/profile/${user.id}`}>{user.username}</Link>
           </li>
           <li onClick={() => logout()  }>
             <Link to="/login"> Log out</Link>

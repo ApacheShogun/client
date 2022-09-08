@@ -36,6 +36,13 @@
   font-size: 0.875rem;
   font-weight: 700;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .2em;
+}
+
+.card-username:hover{
+  color: aqua;
 }
 
 .card-posted-date {

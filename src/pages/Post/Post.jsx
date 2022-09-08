@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import "./Post.css";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import { formatDistanceStrict } from "date-fns";
 import { Image } from "cloudinary-react";
@@ -127,7 +128,7 @@ const Post = ({
     <div className="single-post-container">
       <div className="single-post" key={singlePost.id}>
         <div className="post-user-info">
-          <p className="post-username" onClick={() => navigate(`/profile/${singlePost.UserId}`)}>@{singlePost.username}</p>
+          <p className="post-username" onClick={() => navigate(`/profile/${singlePost.UserId}`)}><CgProfile /> {singlePost.username}</p>
           <p className="post-posted-date">posted {date()}</p>
         </div>
         <p className="post-comment-text">{singlePost.postText}</p>

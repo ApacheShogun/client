@@ -1,4 +1,5 @@
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
 import { BiComment } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { Image } from "cloudinary-react";
@@ -61,7 +62,7 @@ const Card = ({ post, allLikes, setAllLikes, setAllPosts }) => {
   return (
     <div className="card-post">
       <div className="card-user-info">
-        <p className="card-username" onClick={() => navigate(`/profile/${post.UserId}`)}>@{post.username}</p>
+        <p className="card-username" onClick={() => navigate(`/profile/${post.UserId}`)}><CgProfile />{post.username}</p>
         <p className="card-posted-date">
           posted{" "}
           {formatDistanceStrict(new Date(post.updatedAt), new Date(), {

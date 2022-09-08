@@ -70,6 +70,13 @@
   font-size: 1.3rem;
   font-weight: 700;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .2em;
+}
+
+.post-username:hover{
+  color: aqua;
 }
 
 .post-posted-date {

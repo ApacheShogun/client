@@ -141,6 +141,9 @@ const Home = ({
             color={toggleTabs === 1 ? "black" : "white"}
             size="2em"
           />
+          <span className="icon-name">
+            posts
+          </span>
         </div>
 
         <div
@@ -151,6 +154,9 @@ const Home = ({
             color={toggleTabs === 2 ? "black" : "white"}
             size="2.1em"
           />
+          <span className="icon-name">
+            news
+          </span>
         </div>
       </div>
     </div>

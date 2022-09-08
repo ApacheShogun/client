@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { formatDistanceStrict } from "date-fns";
 import { AiFillLike, AiOutlineLike } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
 import CommentModal from "./CommentModal";
 import { Image } from "cloudinary-react";
 
@@ -36,7 +37,9 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
           headers: { jwtToken: user.token },
         })
         .then((res) => {
-          setAllCommentsLikes(res.data.likedComments.map(like => like.CommentId));
+          setAllCommentsLikes(
+            res.data.likedComments.map((like) => like.CommentId)
+          );
         })
         .catch((error) => {
           console.log(error);
@@ -57,7 +60,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
   // post a comment
   const handleSubmit = (data, onSubmitProps) => {
     setIsLoading(true);
-    onSubmitProps.resetForm()
+    onSubmitProps.resetForm();
     // if user is not logged in
     if (!user) {
       console.log("log in");
@@ -82,7 +85,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
           console.log(res.data);
           setIsLoading(false);
           const newComment = res.data.comment;
-              newComment.CommentLikes = []
+          newComment.CommentLikes = [];
           setAllComments((prev) => [...prev, newComment]);
         })
         .catch((error) => {
@@ -97,7 +100,10 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
 
       // send the postImg data to cloudinary
       axios
-        .post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`, formData)
+        .post(
+          `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`,
+          formData
+        )
         .then((res) => {
           // get back the image asset id from cloudary
           const fileName = res.data.public_id;
@@ -117,7 +123,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
             )
             .then((res) => {
               const newComment = res.data.comment;
-              newComment.CommentLikes = []
+              newComment.CommentLikes = [];
               setAllComments((prev) => [...prev, newComment]);
               setIsLoading(false);
             });
@@ -158,7 +164,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
       )
       .then((res) => {
         console.log(res.data);
-        setAllComments(prev => {
+        setAllComments((prev) => {
           return prev.map((c) => {
             if (c.id === CommentId) {
               if (res.data.liked) {
@@ -167,19 +173,19 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
                 const likesArray = c.CommentLikes;
                 likesArray.pop();
                 console.log(likesArray);
-                return { ...c, CommentLikes: [likesArray]};
+                return { ...c, CommentLikes: [likesArray] };
               }
             } else {
               return c;
             }
           });
-        })
+        });
       })
       .catch((error) => {
         console.log(error);
       });
 
-          // some jank way of toggling the liked icons based on the current login user
+    // some jank way of toggling the liked icons based on the current login user
     if (allCommentsLikes.includes(CommentId)) {
       setAllCommentsLikes((prev) => prev.filter((i) => i !== CommentId));
     } else {
@@ -232,8 +238,13 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
       <div className="comment-flex">
         {allComments.map((comment) => (
           <div className="single-comment" key={comment.id}>
-            <div className="post-user-info">
-              <p className="post-username" onClick={() => navigate(`/profile/${comment.UserId}`)}>@{comment.username}</p>
+            <div className="comment-user-info">
+              <p
+                className="post-username"
+                onClick={() => navigate(`/profile/${comment.UserId}`)}
+              >
+                <CgProfile /> {comment.username}
+              </p>
               <p className="post-posted-date">
                 replied{" "}
                 {formatDistanceStrict(new Date(comment.updatedAt), new Date(), {
@@ -244,7 +255,10 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
             <p className="post-comment-text">{comment.commentText}</p>
             {comment.commentImg && (
               <div className="post-img-container">
-                <Image cloudName={process.env.REACT_APP_CLOUD_NAME} publicId={comment.commentImg} />
+                <Image
+                  cloudName={process.env.REACT_APP_CLOUD_NAME}
+                  publicId={comment.commentImg}
+                />
               </div>
             )}
             <div className="post-interactions">
@@ -265,7 +279,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
                   />
                 )}
                 <p className="post-like-amount">
-                  {comment.CommentLikes? comment.CommentLikes.length: 0} likes
+                  {comment.CommentLikes ? comment.CommentLikes.length : 0} likes
                 </p>
               </div>
 
