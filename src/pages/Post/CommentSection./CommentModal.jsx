@@ -177,7 +177,7 @@ const CommentModal = ({
 
       {toCommentEdit && (
         <div className="create-comment-container">
-          <h2>Update Comment</h2>
+          <h2>Edit Comment</h2>
           <Formik
             initialValues={initialvalues}
             validationSchema={validationSchema}
@@ -190,7 +190,7 @@ const CommentModal = ({
                   id="createpost"
                   as="textarea"
                   name="commentText"
-                  placeholder="post your ideas or images here"
+                  placeholder="edit comment here!"
                 />
                 <input
                   id="createpostimg"

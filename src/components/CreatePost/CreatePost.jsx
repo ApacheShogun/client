@@ -96,7 +96,7 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
 
   return (
     <div className="create-post-container">
-      <h2>create a post</h2>
+      <h2>Create a post</h2>
       <Formik
         initialValues={initialvalues}
         validationSchema={validationSchema}
@@ -108,7 +108,7 @@ const CreatePostForm = ({ setAllPosts, isLoading, setIsLoading }) => {
               id="createpost"
               as="textarea"
               name="postText"
-              placeholder="post your ideas or images here"
+              placeholder="write post here!"
             />
             <input
               id="createpostimg"

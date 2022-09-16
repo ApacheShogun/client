@@ -164,7 +164,7 @@ const Modal = ({
 
       {toEdit && (
         <>
-          <h2>Update your post</h2>
+          <h2>Edit your post</h2>
           <Formik
             initialValues={initialvalues}
             validationSchema={validationSchema}
@@ -177,7 +177,7 @@ const Modal = ({
                   id="createpost"
                   as="textarea"
                   name="postText"
-                  placeholder="update post"
+                  placeholder="edit post here!"
                 />
                 <input
                   id="createpostimg"

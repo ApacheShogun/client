@@ -196,7 +196,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
   return (
     <div className="comment-container">
       <div className="create-comment-container">
-        <h2>reply with a comment</h2>
+        <h2>Reply with a comment</h2>
         <Formik
           initialValues={initialvalues}
           validationSchema={validationSchema}
@@ -209,7 +209,7 @@ const Comments = ({ isLoading, postId, setIsLoading }) => {
                 id="createpost"
                 as="textarea"
                 name="commentText"
-                placeholder="post your ideas or images here"
+                placeholder="write comment here!"
               />
               <input
                 id="createpostimg"

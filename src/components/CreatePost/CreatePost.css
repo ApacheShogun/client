@@ -32,9 +32,12 @@
     margin-top: 1.6em;
     cursor: pointer;
     transition: all .3s;
+    color: white;
+    font-weight: 700;
+    background-color: #00ffff;
 }
 
 .createformBtn:hover{
-    background-color: #00ffff;
+    background-color: #3bd614;
     transform: scale(1.05);
 }
